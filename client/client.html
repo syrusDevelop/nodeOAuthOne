@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+
+		$(document).ready(function () {
+
+			$("#auth").click(function () {
+				let url = "http://localhost:8080/";
+				$.ajax({
+					type: "GET",
+					url: url,
+					success: function (result) {
+						sessionStorage.setItem("pwTocken", result.token);
+					}
+				});
+			});
+
+			$("#apiCall").click(function () {
+				let url = "http://localhost:8080/auth";
+				let token = sessionStorage.getItem("pwTocken");
+
+				$.ajax({
+					type: "GET",
+					url: url,
+					headers: { "Authorization": token },
+					success: function (result) {
+						//Do somthing
+					}
+				});
+
+			});
+
+
+
+		});
+
+	</script>
+	<h2>OAuth</h2>
+
+	<button type="button" id="auth">Auth</button>
+	<button type="button" id="apiCall">APICall</button>
+
+	<p id="demo"></p>
+
+</body>
+
+</html>
